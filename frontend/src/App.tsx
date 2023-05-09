@@ -1,12 +1,13 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import NavBar from "./components/NavBar";
+import Register from "./components/Register";
 
 function App() {
   return (
-    <div className="App">
-      <h1>War Tee V1</h1>
-    </div>
+    <>
+      <NavBar />
+      <Register />
+    </>
   );
 }
 
