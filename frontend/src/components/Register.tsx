@@ -1,37 +1,50 @@
 import { Box, Button, TextField } from "@mui/material";
-import React from "react";
+import { useState } from "react";
 
 const Register = () => {
+  const [user, setUser] = useState({ name: "", email: "", password: "" });
+
+  const register = async () => {
+    const { name, email, password } = user;
+
+    if (name && email && password) {
+      const response = await fetch("http://localhost:5006/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+
+      console.log(await response.json());
+    } else {
+      alert("Please fill all Info...");
+    }
+  };
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-        mt: 2,
-      }}
-    >
+    <Box sx={{ display: "flex", flexDirection: "column", mt: 5 }}>
       <TextField
-        id="outlined-basic"
-        label="User Name"
+        label="Name"
         variant="outlined"
-        sx={{ mt: 2 }}
+        sx={{ minWidth: "300px", mb: 2 }}
+        onChange={(evt) => setUser({ ...user, name: evt.target.value })}
       />
       <TextField
-        id="outlined-basic"
-        label="Eamil"
+        label="Email"
+        type="email"
         variant="outlined"
-        sx={{ mt: 2 }}
+        sx={{ minWidth: "300px" }}
+        onChange={(evt) => setUser({ ...user, email: evt.target.value })}
       />
       <TextField
-        id="outlined-basic"
         label="Password"
         variant="outlined"
+        sx={{ minWidth: "300px", my: 2 }}
         type="password"
-        sx={{ mt: 2 }}
+        onChange={(evt) => setUser({ ...user, password: evt.target.value })}
       />
-      <Button variant="outlined" sx={{ mt: 2 }}>
+      <Button variant="contained" onClick={register}>
         Register
       </Button>
     </Box>
